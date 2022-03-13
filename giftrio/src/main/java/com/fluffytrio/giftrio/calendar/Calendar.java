@@ -3,6 +3,9 @@ package com.fluffytrio.giftrio.calendar;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.users.Users;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,13 +15,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 @Entity
-@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false, updatable=false)
@@ -28,7 +32,8 @@ public class Calendar {
     @JoinColumn(name="setting_id", nullable=false)
     private Settings settingId;
 
-    @OneToMany(mappedBy = "calendar_id")
+    @OneToMany
+    @JoinColumn(name="calendar_id")
     private List<Advent> adventList;
 
     private LocalDate startDate;
@@ -44,4 +49,10 @@ public class Calendar {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Builder
+    public Calendar(Users users, Settings settings) {
+        this.userId = users;
+        this.settingId = settings;
+    }
 }
