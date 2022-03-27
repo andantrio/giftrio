@@ -1,6 +1,5 @@
 package com.fluffytrio.giftrio.settings;
 
-import com.fluffytrio.giftrio.users.Users;
 
 import javax.persistence.*;
 
@@ -8,6 +7,6 @@ import javax.persistence.*;
 public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
 }
