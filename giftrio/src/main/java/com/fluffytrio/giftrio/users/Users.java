@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
-@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Users {
     @Id
