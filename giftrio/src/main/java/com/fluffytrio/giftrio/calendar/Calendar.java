@@ -1,8 +1,10 @@
 package com.fluffytrio.giftrio.calendar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.users.Users;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Calendar {
@@ -34,6 +38,7 @@ public class Calendar {
 
     @OneToMany
     @JoinColumn(name="calendar_id")
+    @JsonIgnore
     private List<Advent> adventList;
 
     private LocalDate startDate;
@@ -50,9 +55,4 @@ public class Calendar {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder
-    public Calendar(Users users, Settings settings) {
-        this.userId = users;
-        this.settingId = settings;
-    }
 }
