@@ -20,7 +20,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,6 +55,7 @@ public class AdventControllerTest {
     }
 
     @Test
+    @Transactional
     public void addAdvent() throws Exception {
         //given
         int seqNum = 1;
@@ -84,18 +88,92 @@ public class AdventControllerTest {
                                                 .isOpen(false)
                                                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/advent";
+        String url = "http://localhost:" + port + "/api/v1/advents";
 
         //when
         ResponseEntity<Advent> responseEntity = restTemplate.postForEntity(url, adventRequestDto, Advent.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Advent> adventList = adventRepository.findAll();
         assertThat(adventList.get(0).getAdventDate()).isEqualTo(adventDate);
         assertThat(adventList.get(0).getText()).isEqualTo(text);
         assertThat(adventList.get(0).getImg()).isEqualTo(img);
+    }
+
+    @Test
+    @Transactional
+    public void getAdvent() throws Exception {
+        //given
+        long adventId = 14;
+
+        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
+
+        //when
+        ResponseEntity<Advent> responseEntity = restTemplate.getForEntity(url, Advent.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        assertThat(Objects.requireNonNull(responseEntity.getBody()).getId()).isEqualTo(adventId);
+    }
+
+    @Test
+    @Transactional
+    public void getAdvents() throws Exception {
+        //given
+        String url = "http://localhost:" + port + "/api/v1/advents";
+
+        //when
+        ResponseEntity<Advent[]> responseEntity = restTemplate.getForEntity(url, Advent[].class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        List<Advent> advents = Arrays.asList(Objects.requireNonNull(responseEntity.getBody()));
+        assertThat(advents.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    public void patchAdvent() throws Exception {
+        //given
+        long adventId = 14;
+        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
+
+        int seqNum = 3;
+        String text = "Update test";
+        AdventRequestDto adventRequestDto = AdventRequestDto.builder()
+                .id(adventId)
+                .seqNum(seqNum)
+                .text(text)
+                .build();
+
+        //when
+        restTemplate.put(url,adventRequestDto, Advent.class);
+
+        //then
+        Optional<Advent> advent = adventRepository.findById(adventId);
+        if(advent.isPresent()) {
+            assertThat(advent.get().getId()).isEqualTo(adventId);
+            assertThat(advent.get().getText()).isEqualTo(text);
+            assertThat(advent.get().getSeqNum()).isEqualTo(seqNum);
+        }
+    }
+
+    @Test
+    @Transactional
+    public void deleteAdvent() throws Exception {
+        //given
+        long adventId = 14;
+        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
+
+        //when
+        restTemplate.delete(url, Boolean.class);
+
+        //then
+        Optional<Advent> advent = adventRepository.findById(adventId);
+        advent.ifPresent(value -> assertThat(value.isDelete()).isEqualTo(true));
     }
 }
