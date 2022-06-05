@@ -45,6 +45,9 @@ public class Advent {
 
     private boolean isOpen;
 
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean isDelete;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -52,4 +55,8 @@ public class Advent {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public void delete(){
+        this.isDelete = true;
+    }
 }
