@@ -29,7 +29,8 @@ public class CalendarRequestDto {
 
     public Calendar toEntity() {
         return Calendar.builder()
-                .userId(userId)
+                .id(id)
+                .user(userId)
                 .settingId(settingId)
                 .startDate(startDate)
                 .endDate(endDate)
