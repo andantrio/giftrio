@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AdventRequestDto {
 
+    private Long id;
     private Users userId;
     private Calendar calendarId;
     private int seqNum;
@@ -23,9 +24,11 @@ public class AdventRequestDto {
     private String text;
     private String img;
     private boolean isOpen;
+    private boolean isDelete;
 
     public Advent toEntity(){
         return Advent.builder()
+                .id(id)
                 .userId(userId)
                 .calendarId(calendarId)
                 .seqNum(seqNum)
@@ -33,6 +36,7 @@ public class AdventRequestDto {
                 .text(text)
                 .img(img)
                 .isOpen(isOpen)
+                .isDelete(isDelete)
                 .build();
     }
 }
