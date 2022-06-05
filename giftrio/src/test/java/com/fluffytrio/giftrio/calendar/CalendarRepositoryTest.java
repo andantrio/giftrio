@@ -53,7 +53,7 @@ public class CalendarRepositoryTest {
 
         ///Calendar
         Calendar calendar = Calendar.builder()
-                .userId(postUser)
+                .user(postUser)
                 .settingId(postSetting)
                 .build();
         calendarRepository.save(calendar);
@@ -61,6 +61,6 @@ public class CalendarRepositoryTest {
         List<Calendar> calendarList = calendarRepository.findAll();
         //then
         Calendar temp = calendarList.get(0);
-        assertThat(temp.getUserId().getUserId()).isEqualTo(userId);
+        assertThat(temp.getUser().getUserId()).isEqualTo(userId);
     }
 }
