@@ -30,22 +30,29 @@ public class Calendar {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false, updatable=false)
-    private Users userId;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name="setting_id", nullable=false)
     private Settings settingId;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="calendar_id")
     @JsonIgnore
     private List<Advent> adventList;
 
+    @Column(updatable = false)
     private LocalDate startDate;
+
+    @Column(updatable = false)
     private LocalDate endDate;
+
     private String title;
     private String detail;
     private String backgroundImg;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isDelete;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -55,4 +62,10 @@ public class Calendar {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public void delete() {
+        this.isDelete = true;
+        for (Advent advent : adventList) {
+            advent.delete();
+        }
+    }
 }
