@@ -21,6 +21,9 @@ public class AdventService {
 
     @Transactional
     public Optional<Advent> getAdvent(Long adventId){
+        if(adventRepository.findById(adventId).isEmpty()){
+            throw new IllegalArgumentException("ID값이 없습니다.");
+        }
         return adventRepository.findById(adventId);
     }
 
@@ -32,9 +35,9 @@ public class AdventService {
     @Transactional
     public Advent updateAdvent(AdventRequestDto adventRequestDto){
         Optional<Advent> originAdvent = adventRepository.findById(adventRequestDto.toEntity().getId());
-//        if(! originAdvent.isPresent()){
-//            return Exception;
-//        }
+        if(originAdvent.isEmpty()){
+            throw new IllegalArgumentException("ID값이 없습니다.");
+        }
         return adventRepository.save(adventRequestDto.toEntity());
     }
 
