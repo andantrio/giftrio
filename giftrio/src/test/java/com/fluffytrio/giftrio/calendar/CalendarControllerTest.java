@@ -85,8 +85,10 @@ public class CalendarControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<Calendar> all = calendarRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getDetail()).isEqualTo(detail);
+        assertAll(
+                () -> assertThat(all.get(0).getTitle()).isEqualTo(title),
+                () -> assertThat(all.get(0).getDetail()).isEqualTo(detail)
+        );
     }
 
     @Test
@@ -99,8 +101,10 @@ public class CalendarControllerTest {
         ResponseEntity<Calendar> responseEntity = restTemplate.getForEntity(url, Calendar.class);
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getUser().getUserId()).isEqualTo("tester");
+        assertAll(
+                () -> assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK),
+                () -> assertThat(responseEntity.getBody().getUser().getUserId()).isEqualTo("tester")
+        );
     }
 
     @Test
@@ -114,9 +118,11 @@ public class CalendarControllerTest {
         List<Calendar> calendars = Arrays.asList(responseEntity.getBody());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(calendars.get(0).getTitle()).isEqualTo("title");
-        assertThat(calendars).hasSize(1);
+        assertAll(
+                () -> assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK),
+                () -> assertThat(calendars.get(0).getTitle()).isEqualTo("title"),
+                () -> assertThat(calendars).hasSize(1)
+        );
     }
 
     @Test
