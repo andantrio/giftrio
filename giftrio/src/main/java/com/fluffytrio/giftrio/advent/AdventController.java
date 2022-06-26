@@ -30,8 +30,8 @@ public class AdventController {
     }
 
     @PutMapping("/{adventId}")
-    public Advent patchAdvent(@RequestBody AdventRequestDto adventRequestDto){
-        return adventService.patchAdvent(adventRequestDto);
+    public Advent updateAdvent(@RequestBody AdventRequestDto adventRequestDto){
+        return adventService.updateAdvent(adventRequestDto);
     }
 
     @DeleteMapping("/{adventId}")

@@ -30,7 +30,7 @@ public class AdventService {
     }
 
     @Transactional
-    public Advent patchAdvent(AdventRequestDto adventRequestDto){
+    public Advent updateAdvent(AdventRequestDto adventRequestDto){
         Optional<Advent> originAdvent = adventRepository.findById(adventRequestDto.toEntity().getId());
 //        if(! originAdvent.isPresent()){
 //            return Exception;
