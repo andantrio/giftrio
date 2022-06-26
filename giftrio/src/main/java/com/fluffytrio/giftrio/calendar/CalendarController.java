@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/calendar")
+@RequestMapping("/api/v1/calendars")
 public class CalendarController {
     private final CalendarService calendarService;
 

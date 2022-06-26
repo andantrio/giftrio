@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -29,6 +27,7 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CalendarControllerTest {
+    private final static String CALENDAR_URL = "/api/v1/calendars";
     @LocalServerPort
     private int port;
 
@@ -78,7 +77,7 @@ public class CalendarControllerTest {
                 .backgroundImg("test")
                 .build();
 
-        String url = "http://localhost:" + port + "/calendar";
+        String url = "http://localhost:" + port + CALENDAR_URL;
         //when
         ResponseEntity<Calendar> responseEntity = restTemplate.postForEntity(url, calendarDto, Calendar.class);
 
@@ -94,7 +93,7 @@ public class CalendarControllerTest {
     public void Calendar_조회() throws Exception {
         //given
         Calendar_등록();
-        String url = "http://localhost:" + port + "/calendar/1";
+        String url = "http://localhost:" + port + CALENDAR_URL + "/1";
 
         //when
         ResponseEntity<Calendar> responseEntity = restTemplate.getForEntity(url, Calendar.class);
@@ -108,7 +107,7 @@ public class CalendarControllerTest {
     public void Calendar_전체_조회() throws Exception {
         //given
         Calendar_등록();
-        String url = "http://localhost:" + port + "/calendar";
+        String url = "http://localhost:" + port + CALENDAR_URL;
 
         //when
         ResponseEntity<Calendar[]> responseEntity = restTemplate.getForEntity(url, Calendar[].class);
@@ -142,7 +141,7 @@ public class CalendarControllerTest {
                 .build();
 
         //when
-        String url = "http://localhost:" + port + "/calendar";
+        String url = "http://localhost:" + port + CALENDAR_URL;
         restTemplate.put(url, calendarDto, Calendar.class);
 
         //then
@@ -159,7 +158,7 @@ public class CalendarControllerTest {
         Calendar_등록();
 
         //when
-        String url = "http://localhost:" + port + "/calendar/1";
+        String url = "http://localhost:" + port + CALENDAR_URL + "/1";
         restTemplate.delete(url);
         Optional<Calendar> calendar = calendarRepository.findById(1L);
 
