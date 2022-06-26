@@ -41,11 +41,10 @@ public class CalendarService {
     @Transactional
     public Calendar deleteCalendar(Long id) {
         Optional<Calendar> findCalendar = calendarRepository.findById(id);
-        Calendar calendar = null;
         if (findCalendar.get() == null) {
             throw new IllegalArgumentException("ID값이 없습니다.");
         } else {
-            calendar = findCalendar.get();
+            Calendar calendar = findCalendar.get();
             calendar.delete();
             return calendarRepository.save(calendar);
         }
