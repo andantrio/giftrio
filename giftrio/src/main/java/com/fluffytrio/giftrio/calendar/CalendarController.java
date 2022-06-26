@@ -18,9 +18,9 @@ public class CalendarController {
         return calendarService.addCalendar(calendarRequestDto);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Calendar> getCalendar(@PathVariable Long id) {
-        return calendarService.getCalendar(id);
+    @GetMapping("/{calendarId}")
+    public Optional<Calendar> getCalendar(@PathVariable Long calendarId) {
+        return calendarService.getCalendar(calendarId);
     }
 
     @GetMapping()
@@ -33,8 +33,8 @@ public class CalendarController {
         return calendarService.updateCalendar(calendarRequestDto.toEntity());
     }
 
-    @DeleteMapping("/{id}")
-    public Calendar deleteCalendar(@PathVariable Long id) {
-        return calendarService.deleteCalendar(id);
+    @DeleteMapping("/{calendarId}")
+    public Calendar deleteCalendar(@PathVariable Long calendarId) {
+        return calendarService.deleteCalendar(calendarId);
     }
 }
