@@ -26,6 +26,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -99,9 +101,11 @@ public class AdventControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<Advent> adventList = adventRepository.findAll();
-        assertThat(adventList.get(0).getAdventDate()).isEqualTo(adventDate);
-        assertThat(adventList.get(0).getText()).isEqualTo(text);
-        assertThat(adventList.get(0).getImg()).isEqualTo(img);
+        assertAll(
+            () -> assertThat(adventList.get(0).getAdventDate()).isEqualTo(adventDate),
+            () -> assertThat(adventList.get(0).getText()).isEqualTo(text),
+            () -> assertThat(adventList.get(0).getImg()).isEqualTo(img)
+        );
     }
 
     @Test
@@ -152,11 +156,11 @@ public class AdventControllerTest {
 
         //then
         Optional<Advent> advent = adventRepository.findById(adventId);
-        if(advent.isPresent()) {
-            assertThat(advent.get().getId()).isEqualTo(adventId);
-            assertThat(advent.get().getText()).isEqualTo(text);
-            assertThat(advent.get().getSeqNum()).isEqualTo(seqNum);
-        }
+        assertAll(
+            () -> assertThat(advent.get().getId()).isEqualTo(adventId),
+            () ->  assertThat(advent.get().getText()).isEqualTo(text),
+            () -> assertThat(advent.get().getSeqNum()).isEqualTo(seqNum)
+        );
     }
 
     @Test
