@@ -46,8 +46,7 @@ public class AdventService {
         Optional<Advent> advent = adventRepository.findById(adventId);
         if(advent.isPresent()){
             advent.get().delete();
-            adventRepository.save(advent.get());
-            return true;
+            return adventRepository.save(advent.get()).isDelete();
         }
         return false;
     }
