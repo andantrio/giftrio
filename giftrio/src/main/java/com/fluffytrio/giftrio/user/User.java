@@ -1,8 +1,7 @@
-package com.fluffytrio.giftrio.users;
+package com.fluffytrio.giftrio.user;
 
 
 import lombok.*;
-import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,14 +11,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE users SET is_delete = true WHERE id = ?")
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userId;
+    private String email;
     private String userName;
     private String password;
 
@@ -34,11 +34,7 @@ public class Users {
     @Column(name = "is_delete", nullable = false, columnDefinition = "boolean default false")
     private boolean isDelete;
 
-    @Builder
-    public Users(Long id, String userId, String userName, String password) {
-        this.id = id;
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
+    public void delete() {
+        this.isDelete = true;
     }
 }
