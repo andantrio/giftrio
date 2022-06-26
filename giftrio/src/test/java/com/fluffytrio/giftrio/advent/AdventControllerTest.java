@@ -137,7 +137,7 @@ public class AdventControllerTest {
 
     @Test
     @Transactional
-    public void patchAdvent() throws Exception {
+    public void updateAdvent() throws Exception {
         //given
         long adventId = 14;
         String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
