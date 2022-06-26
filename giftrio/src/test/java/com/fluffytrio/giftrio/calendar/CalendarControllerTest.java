@@ -27,7 +27,6 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CalendarControllerTest {
-    private final static String CALENDAR_URL = "/api/v1/calendars";
     @LocalServerPort
     private int port;
 
@@ -43,6 +42,8 @@ public class CalendarControllerTest {
     @Autowired
     private CalendarRepository calendarRepository;
 
+    private final String CALENDAR_URL = "/api/v1/calendars";
+
     @After
     public void tearDown() throws Exception {
         calendarRepository.deleteAll();
@@ -51,7 +52,7 @@ public class CalendarControllerTest {
     }
 
     @Test
-    public void Calendar_등록() throws Exception {
+    public void addCalendarTest() throws Exception {
         Users users = Users.builder()
                 .userId("tester")
                 .userName("name")
@@ -59,8 +60,8 @@ public class CalendarControllerTest {
                 .build();
         users = usersRepository.save(users);
 
-        Settings settingId = new Settings();
-        settingId = settingsRepository.save(settingId);
+        Settings setting = new Settings();
+        setting = settingsRepository.save(setting);
 
         String title = "title";
         String detail = "detail";
@@ -69,7 +70,7 @@ public class CalendarControllerTest {
 
         CalendarRequestDto calendarDto = CalendarRequestDto.builder()
                 .userId(users)
-                .settingId(settingId)
+                .settingId(setting)
                 .title(title)
                 .detail(detail)
                 .startDate(startDate)
@@ -92,9 +93,9 @@ public class CalendarControllerTest {
     }
 
     @Test
-    public void Calendar_조회() throws Exception {
+    public void getCalendarTest() throws Exception {
         //given
-        Calendar_등록();
+        addCalendarTest();
         String url = "http://localhost:" + port + CALENDAR_URL + "/1";
 
         //when
@@ -108,9 +109,9 @@ public class CalendarControllerTest {
     }
 
     @Test
-    public void Calendar_전체_조회() throws Exception {
+    public void getCalendarsTest() throws Exception {
         //given
-        Calendar_등록();
+        addCalendarTest();
         String url = "http://localhost:" + port + CALENDAR_URL;
 
         //when
@@ -126,9 +127,9 @@ public class CalendarControllerTest {
     }
 
     @Test
-    public void Calendar_수정() throws Exception {
+    public void updateCalendarTest() throws Exception {
         //given
-        Calendar_등록();
+        addCalendarTest();
         Optional<Users> users = usersRepository.findById(1L);
         Optional<Settings> settingId = settingsRepository.findById(1L);
 
@@ -159,12 +160,12 @@ public class CalendarControllerTest {
     }
 
     @Test
-    public void Calendar_삭제() throws Exception {
+    public void deleteCalendarTest() throws Exception {
         //given
-        Calendar_등록();
+        addCalendarTest();
 
         //when
-        String url = "http://localhost:" + port + CALENDAR_URL + "/1";
+        String url = CALENDAR_URL + "/1";
         restTemplate.delete(url);
         Optional<Calendar> calendar = calendarRepository.findById(1L);
 
