@@ -1,4 +1,4 @@
-package com.fluffytrio.giftrio.users;
+package com.fluffytrio.giftrio.user;
 
 import org.junit.After;
 import org.junit.Test;
@@ -13,13 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UsersRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     @After
     public void cleanup() {
-        usersRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -29,15 +29,15 @@ public class UsersRepositoryTest {
         String userName = "nickname";
         String password = "password";
 
-        usersRepository.save(Users.builder().userId(userId).userName(userName).password(password).build());
+        userRepository.save(User.builder().email(userId).userName(userName).password(password).build());
 
         //when
-        List<Users> usersList = usersRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         //then
-        Users users01 = usersList.get(0);
-        assertThat(users01.getUserId()).isEqualTo(userId);
-        assertThat(users01.getUserName()).isEqualTo(userName);
-        assertThat(users01.getPassword()).isEqualTo(password);
+        User user01 = userList.get(0);
+        assertThat(user01.getEmail()).isEqualTo(userId);
+        assertThat(user01.getUserName()).isEqualTo(userName);
+        assertThat(user01.getPassword()).isEqualTo(password);
     }
 }
