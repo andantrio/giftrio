@@ -49,6 +49,10 @@ public class AdventControllerTest {
     @Autowired
     private SettingsRepository settingsRepository;
 
+    public String getApiUrl(){
+        return String.format("http://localhost:%d/api/v1/advents", port);
+    }
+
     @After
     public void tearDown() throws Exception {
         adventRepository.deleteAll();
@@ -88,10 +92,8 @@ public class AdventControllerTest {
                                                 .isOpen(false)
                                                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/advents";
-
         //when
-        ResponseEntity<Advent> responseEntity = restTemplate.postForEntity(url, adventRequestDto, Advent.class);
+        ResponseEntity<Advent> responseEntity = restTemplate.postForEntity(getApiUrl(), adventRequestDto, Advent.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -106,27 +108,22 @@ public class AdventControllerTest {
     @Transactional
     public void getAdvent() throws Exception {
         //given
+        addAdvent();
         long adventId = 14;
 
-        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
-
         //when
-        ResponseEntity<Advent> responseEntity = restTemplate.getForEntity(url, Advent.class);
+        ResponseEntity<Advent> responseEntity = restTemplate.getForEntity(String.format("%s/%d", getApiUrl(), adventId), Advent.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-
         assertThat(Objects.requireNonNull(responseEntity.getBody()).getId()).isEqualTo(adventId);
     }
 
     @Test
     @Transactional
     public void getAdvents() throws Exception {
-        //given
-        String url = "http://localhost:" + port + "/api/v1/advents";
-
         //when
-        ResponseEntity<Advent[]> responseEntity = restTemplate.getForEntity(url, Advent[].class);
+        ResponseEntity<Advent[]> responseEntity = restTemplate.getForEntity(getApiUrl(), Advent[].class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -139,8 +136,8 @@ public class AdventControllerTest {
     @Transactional
     public void updateAdvent() throws Exception {
         //given
+        addAdvent();
         long adventId = 14;
-        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
 
         int seqNum = 3;
         String text = "Update test";
@@ -151,7 +148,7 @@ public class AdventControllerTest {
                 .build();
 
         //when
-        restTemplate.put(url,adventRequestDto, Advent.class);
+        restTemplate.put(String.format("%s/%d", getApiUrl(), adventId), adventRequestDto, Advent.class);
 
         //then
         Optional<Advent> advent = adventRepository.findById(adventId);
@@ -166,11 +163,11 @@ public class AdventControllerTest {
     @Transactional
     public void deleteAdvent() throws Exception {
         //given
+        addAdvent();
         long adventId = 14;
-        String url = "http://localhost:" + port + "/api/v1/advents/" + adventId;
 
         //when
-        restTemplate.delete(url, Boolean.class);
+        restTemplate.delete(String.format("%s/%d", getApiUrl(), adventId), Boolean.class);
 
         //then
         Optional<Advent> advent = adventRepository.findById(adventId);
