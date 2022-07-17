@@ -2,8 +2,8 @@ package com.fluffytrio.giftrio.calendar;
 
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.settings.SettingsRepository;
-import com.fluffytrio.giftrio.users.Users;
-import com.fluffytrio.giftrio.users.UsersRepository;
+import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,7 @@ public class CalendarRepositoryTest {
     CalendarRepository calendarRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     @Autowired
     SettingsRepository settingsRepository;
@@ -39,11 +39,11 @@ public class CalendarRepositoryTest {
         String userId = "user01";
         String userName = "nickname";
         String password = "password";
-        usersRepository.save(Users.builder().userId(userId).userName(userName).password(password).build());
+        userRepository.save(User.builder().email(userId).userName(userName).password(password).build());
         //when
-        List<Users> usersList = usersRepository.findAll();
+        List<User> usersList = userRepository.findAll();
         //then
-        Users postUser = usersList.get(0);
+        User postUser = usersList.get(0);
 
         ///Settings
         //when
@@ -61,6 +61,6 @@ public class CalendarRepositoryTest {
         List<Calendar> calendarList = calendarRepository.findAll();
         //then
         Calendar temp = calendarList.get(0);
-        assertThat(temp.getUser().getUserId()).isEqualTo(userId);
+        assertThat(temp.getUser().getEmail()).isEqualTo(userId);
     }
 }
