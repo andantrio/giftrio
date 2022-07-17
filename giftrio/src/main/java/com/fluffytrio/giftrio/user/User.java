@@ -1,4 +1,4 @@
-package com.fluffytrio.giftrio.users;
+package com.fluffytrio.giftrio.user;
 
 
 import lombok.*;
@@ -9,15 +9,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userId;
+    private String email;
     private String userName;
     private String password;
 
@@ -29,10 +31,10 @@ public class Users {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder
-    public Users(String userId, String userName, String password) {
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
+    @Column(name = "is_delete", nullable = false, columnDefinition = "boolean default false")
+    private boolean isDelete;
+
+    public void delete() {
+        this.isDelete = true;
     }
 }
