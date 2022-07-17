@@ -1,6 +1,7 @@
 package com.fluffytrio.giftrio.advent;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -80,28 +81,32 @@ public class AdventControllerTest {
         Settings settings1 =  settingsRepository.findAll().get(0);
 
         // create calendar
-        calendarRepository.save(Calendar.builder().user(users1).settingId(settings1).build());
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(7);
+        calendarRepository.save(
+            Calendar.builder().user(users1).settingId(settings1).startDate(startDate).endDate(endDate).build()
+        );
         Calendar calendar1 = calendarRepository.findAll().get(0);
 
         AdventRequestDto adventRequestDto = AdventRequestDto.builder()
                                                 .userId(users1)
                                                 .calendarId(calendar1)
                                                 .seqNum(seqNum)
-                                                .adventDate(adventDate)
                                                 .text(text)
                                                 .img(img)
                                                 .isOpen(false)
                                                 .build();
 
         //when
-        ResponseEntity<Advent> responseEntity = restTemplate.postForEntity(getApiUrl(), adventRequestDto, Advent.class);
+        ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(getApiUrl(), adventRequestDto, Boolean.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEqualTo(true);
 
         List<Advent> adventList = adventRepository.findAll();
         assertAll(
-            () -> assertThat(adventList.get(0).getAdventDate()).isEqualTo(adventDate),
+            () -> assertThat(adventList.get(0).getAdventDate()).isEqualTo(startDate),
             () -> assertThat(adventList.get(0).getText()).isEqualTo(text),
             () -> assertThat(adventList.get(0).getImg()).isEqualTo(img)
         );
