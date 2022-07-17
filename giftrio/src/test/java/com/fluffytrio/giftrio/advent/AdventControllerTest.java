@@ -65,7 +65,6 @@ public class AdventControllerTest {
     public void addAdvent() throws Exception {
         //given
         int seqNum = 1;
-        LocalDate adventDate = LocalDate.now();
         String text = "advent create test";
         String img = "http://img_url.png";
 
