@@ -28,9 +28,6 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @After
     public void tearDown() throws Exception {
         //userRepository.deleteAll();

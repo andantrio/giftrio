@@ -22,7 +22,6 @@ public class User {
     private Long id;
     @Enumerated
     private Role role;
-    @Column(unique=true)
     private String email;
     private String userName;
     private String password;
