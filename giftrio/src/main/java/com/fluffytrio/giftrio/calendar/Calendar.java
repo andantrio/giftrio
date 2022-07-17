@@ -3,7 +3,7 @@ package com.fluffytrio.giftrio.calendar;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.users.Users;
+import com.fluffytrio.giftrio.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class Calendar {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false, updatable=false)
-    private Users user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="setting_id", nullable=false)

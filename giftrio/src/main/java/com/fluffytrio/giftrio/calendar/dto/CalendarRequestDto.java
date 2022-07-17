@@ -3,7 +3,7 @@ package com.fluffytrio.giftrio.calendar.dto;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.users.Users;
+import com.fluffytrio.giftrio.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CalendarRequestDto {
     private Long id;
-    private Users userId;
+    private User userId;
     private Settings settingId;
     private List<Advent> adventList;
     private LocalDate startDate;

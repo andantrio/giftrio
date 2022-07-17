@@ -3,8 +3,8 @@ package com.fluffytrio.giftrio.calendar;
 import com.fluffytrio.giftrio.calendar.dto.CalendarRequestDto;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.settings.SettingsRepository;
-import com.fluffytrio.giftrio.users.Users;
-import com.fluffytrio.giftrio.users.UsersRepository;
+import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,7 @@ public class CalendarControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     @Autowired
     SettingsRepository settingsRepository;
@@ -48,17 +48,17 @@ public class CalendarControllerTest {
     public void tearDown() throws Exception {
         calendarRepository.deleteAll();
         settingsRepository.deleteAll();
-        usersRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     public void addCalendarTest() throws Exception {
-        Users users = Users.builder()
-                .userId("tester")
+        User users = User.builder()
+                .email("tester")
                 .userName("name")
                 .password("123456")
                 .build();
-        users = usersRepository.save(users);
+        users = userRepository.save(users);
 
         Settings setting = new Settings();
         setting = settingsRepository.save(setting);
@@ -104,7 +104,7 @@ public class CalendarControllerTest {
         //then
         assertAll(
                 () -> assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK),
-                () -> assertThat(responseEntity.getBody().getUser().getUserId()).isEqualTo("tester")
+                () -> assertThat(responseEntity.getBody().getUser().getEmail()).isEqualTo("tester")
         );
     }
 
@@ -130,7 +130,7 @@ public class CalendarControllerTest {
     public void updateCalendarTest() throws Exception {
         //given
         addCalendarTest();
-        Optional<Users> users = usersRepository.findById(1L);
+        Optional<User> user = userRepository.findById(1L);
         Optional<Settings> settingId = settingsRepository.findById(1L);
 
         LocalDate startDate = LocalDate.of(2022, 05, 01);
@@ -138,7 +138,7 @@ public class CalendarControllerTest {
 
         CalendarRequestDto calendarDto = CalendarRequestDto.builder()
                 .id(1L)
-                .userId(users.get())
+                .userId(user.get())
                 .settingId(settingId.get())
                 .title("title2")
                 .detail("detail2")

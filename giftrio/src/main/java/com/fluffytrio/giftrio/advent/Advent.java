@@ -2,7 +2,7 @@ package com.fluffytrio.giftrio.advent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.calendar.Calendar;
-import com.fluffytrio.giftrio.users.Users;
+import com.fluffytrio.giftrio.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class Advent {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false, updatable = false)
-    private Users userId;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name="calendar_id", nullable = false, updatable = false)
