@@ -26,9 +26,13 @@ public class AdventService {
         int dateDiff = Period.between(calendar.getStartDate(), calendar.getEndDate()).getDays();
         for(int i=0; i<dateDiff+1; i++){
             LocalDate adventDate = calendar.getStartDate().plusDays(i);
-            adventRequestDto.setAdventDate(adventDate);
-            adventRequestDto.setSeqNum(i+1);
-            adventRepository.save(adventRequestDto.toEntity());
+            Advent advent = Advent.builder()
+                    .userId(adventRequestDto.getUserId())
+                    .calendarId(adventRequestDto.getCalendarId())
+                    .seqNum(i+1)
+                    .adventDate(adventDate)
+                    .build();
+            adventRepository.save(advent);
         }
         return true;
     }
