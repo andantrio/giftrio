@@ -57,13 +57,9 @@ public class AdventService {
 
     public boolean getAdventByCalendarId(Long calendarId){
         Optional<Calendar> calendar = calendarRepository.findById(calendarId);
-        long getId = 0L;
         if(calendar.isEmpty()) {
             throw new IllegalArgumentException("ID값이 없습니다.");
         }
-//        } else {
-//            getId = calendar.get().getId();
-//        }
         List<Advent> advents = adventRepository.findByCalendarId(calendar.get());
         return ! advents.isEmpty();
     }
