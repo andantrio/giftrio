@@ -1,8 +1,10 @@
 package com.fluffytrio.giftrio.calendar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.users.Users;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Calendar {
@@ -26,21 +30,29 @@ public class Calendar {
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false, updatable=false)
-    private Users userId;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name="setting_id", nullable=false)
     private Settings settingId;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="calendar_id")
+    @JsonIgnore
     private List<Advent> adventList;
 
+    @Column(updatable = false)
     private LocalDate startDate;
+
+    @Column(updatable = false)
     private LocalDate endDate;
+
     private String title;
     private String detail;
     private String backgroundImg;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isDelete;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -50,9 +62,10 @@ public class Calendar {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder
-    public Calendar(Users users, Settings settings) {
-        this.userId = users;
-        this.settingId = settings;
+    public void delete() {
+        this.isDelete = true;
+        for (Advent advent : adventList) {
+            advent.delete();
+        }
     }
 }

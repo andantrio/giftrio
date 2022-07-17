@@ -1,7 +1,5 @@
-package com.fluffytrio.giftrio.Calendar;
+package com.fluffytrio.giftrio.calendar;
 
-import com.fluffytrio.giftrio.calendar.Calendar;
-import com.fluffytrio.giftrio.calendar.CalendarRepository;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.settings.SettingsRepository;
 import com.fluffytrio.giftrio.users.Users;
@@ -55,14 +53,14 @@ public class CalendarRepositoryTest {
 
         ///Calendar
         Calendar calendar = Calendar.builder()
-                .users(postUser)
-                .settings(postSetting)
+                .user(postUser)
+                .settingId(postSetting)
                 .build();
         calendarRepository.save(calendar);
         //when
         List<Calendar> calendarList = calendarRepository.findAll();
         //then
         Calendar temp = calendarList.get(0);
-        assertThat(temp.getUserId().getUserId()).isEqualTo(userId);
+        assertThat(temp.getUser().getUserId()).isEqualTo(userId);
     }
 }
