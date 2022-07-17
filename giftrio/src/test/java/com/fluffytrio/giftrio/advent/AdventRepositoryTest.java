@@ -4,8 +4,8 @@ import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.calendar.CalendarRepository;
 import com.fluffytrio.giftrio.settings.Settings;
 import com.fluffytrio.giftrio.settings.SettingsRepository;
-import com.fluffytrio.giftrio.users.Users;
-import com.fluffytrio.giftrio.users.UsersRepository;
+import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ public class AdventRepositoryTest {
     AdventRepository adventRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository usersRepository;
 
     @Autowired
     CalendarRepository calendarRepository;
@@ -49,15 +49,15 @@ public class AdventRepositoryTest {
         String userId = "user01";
         String userName = "nickname";
         String password = "password";
-        usersRepository.save(Users.builder().userId(userId).userName(userName).password(password).build());
-        Users users1 = usersRepository.findAll().get(0);
+        usersRepository.save(User.builder().email(userId).userName(userName).password(password).build());
+        User users1 = usersRepository.findAll().get(0);
 
         // create setting
         settingsRepository.save(new Settings());
         Settings settings1 =  settingsRepository.findAll().get(0);
 
         // create calendar
-        calendarRepository.save(Calendar.builder().users(users1).settings(settings1).build());
+        calendarRepository.save(Calendar.builder().user(users1).settingId(settings1).build());
         Calendar calendar1 = calendarRepository.findAll().get(0);
 
         adventRepository.save(Advent.builder()
