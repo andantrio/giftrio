@@ -1,5 +1,7 @@
 package com.fluffytrio.giftrio.advent;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,16 @@ public class AdventService {
     private final CalendarRepository calendarRepository;
 
     @Transactional
-    public Advent addAdvent(AdventRequestDto adventRequestDto){
-        return adventRepository.save(adventRequestDto.toEntity());
+    public boolean addAdvent(AdventRequestDto adventRequestDto){
+        Calendar calendar = adventRequestDto.getCalendarId();
+        int dateDiff = Period.between(calendar.getStartDate(), calendar.getEndDate()).getDays();
+        for(int i=0; i<dateDiff+1; i++){
+            LocalDate adventDate = calendar.getStartDate().plusDays(i);
+            adventRequestDto.setAdventDate(adventDate);
+            adventRequestDto.setSeqNum(i+1);
+            adventRepository.save(adventRequestDto.toEntity());
+        }
+        return true;
     }
 
     @Transactional
