@@ -26,7 +26,7 @@ public class AdventController {
     }
 
     @PostMapping()
-    public Advent addAdvent(@RequestBody AdventRequestDto adventRequestDto){
+    public boolean addAdvent(@RequestBody AdventRequestDto adventRequestDto){
         return adventService.addAdvent(adventRequestDto);
     }
 
