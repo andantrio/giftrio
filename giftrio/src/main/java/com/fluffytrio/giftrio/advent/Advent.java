@@ -1,7 +1,9 @@
 package com.fluffytrio.giftrio.advent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.users.Users;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Advent {
@@ -28,6 +32,8 @@ public class Advent {
 
     @ManyToOne
     @JoinColumn(name="calendar_id", nullable = false, updatable = false)
+
+    @JsonIgnore
     private Calendar calendarId;
 
     private int seqNum;
@@ -39,6 +45,9 @@ public class Advent {
 
     private boolean isOpen;
 
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean isDelete;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -47,12 +56,7 @@ public class Advent {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder
-    public Advent(Users users, Calendar calendar, LocalDate adventDate, String text) {
-        this.userId = users;
-        this.calendarId = calendar;
-        this.adventDate = adventDate;
-        this.text = text;
-        this.isOpen = false;
+    public void delete(){
+        this.isDelete = true;
     }
 }

@@ -61,8 +61,8 @@ public class AdventRepositoryTest {
         Calendar calendar1 = calendarRepository.findAll().get(0);
 
         adventRepository.save(Advent.builder()
-                .users(users1)
-                .calendar(calendar1)
+                .userId(users1)
+                .calendarId(calendar1)
                 .adventDate(adventDate)
                 .text(text)
                 .build());
