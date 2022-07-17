@@ -26,6 +26,13 @@ public class AdventRequestDto {
     private boolean isOpen;
     private boolean isDelete;
 
+    public void setAdventDate(LocalDate adventDate){
+        this.adventDate = adventDate;
+    }
+    public void setSeqNum(int seqNum){
+        this.seqNum = seqNum;
+    }
+
     public Advent toEntity(){
         return Advent.builder()
                 .id(id)
