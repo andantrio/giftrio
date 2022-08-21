@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fluffytrio.giftrio.advent.dto.AdventRequestDto;
 import com.fluffytrio.giftrio.calendar.Calendar;
-import com.fluffytrio.giftrio.calendar.CalendarRepository;
+import com.fluffytrio.giftrio.calendar.CalendarService;
 
 @RequiredArgsConstructor
 @Service
 public class AdventService {
 
     private final AdventRepository adventRepository;
-    private final CalendarRepository calendarRepository;
+    private final CalendarService calendarService;
 
     @Transactional
     public Advent addAdvent(AdventRequestDto adventRequestDto){
@@ -56,7 +56,7 @@ public class AdventService {
     }
 
     public boolean getAdventByCalendarId(Long calendarId){
-        Optional<Calendar> calendar = calendarRepository.findById(calendarId);
+        Optional<Calendar> calendar = calendarService.getCalendar(calendarId);
         if(calendar.isEmpty()) {
             throw new IllegalArgumentException("ID값이 없습니다.");
         }
