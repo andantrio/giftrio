@@ -16,7 +16,7 @@ public class UserService {
 
     @Transactional
     public User addUser(UserRequestDto userRequestDto) {
-        if (userRepository.getByEmail(userRequestDto.getEmail()).size() > 0) {
+        if (userRepository.getUsersByEmail(userRequestDto.getEmail()).size() > 0) {
             throw new IllegalArgumentException("이미 가입된 메일 주소입니다.");
         }
         return userRepository.save(userRequestDto.toEntity());
