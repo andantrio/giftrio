@@ -5,11 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordEncoder {
     public String encode(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
-        md.update(password.getBytes());
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+        messageDigest.update(password.getBytes());
 
         StringBuilder sb = new StringBuilder();
-        for(byte b : md.digest()) {
+        for(byte b : messageDigest.digest()) {
             sb.append(b);
         }
 

@@ -44,7 +44,7 @@ public class CalendarService {
     @Transactional
     public Calendar updatePassword(Calendar updateCalendar) throws NoSuchAlgorithmException {
         String password = updateCalendar.getPassword();
-        if (password == null && password == "") {
+        if (password == null || password == "") {
             throw new IllegalArgumentException("잘못된 값을 입력하였습니다.");
         }
         PasswordEncoder passwordEncoder = new PasswordEncoder();
