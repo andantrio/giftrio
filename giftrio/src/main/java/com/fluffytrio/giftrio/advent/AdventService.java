@@ -70,7 +70,7 @@ public class AdventService {
     }
 
     public boolean getAdventByCalendarId(Long calendarId){
-        Optional<Calendar> calendar = calendarService.getCalendar(calendarId);
+        Optional<Calendar> calendar = Optional.ofNullable(calendarService.getCalendar(calendarId));
         if(calendar.isEmpty()) {
             throw new IllegalArgumentException("ID값이 없습니다.");
         }
