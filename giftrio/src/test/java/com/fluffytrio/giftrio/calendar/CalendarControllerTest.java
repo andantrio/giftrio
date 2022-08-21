@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.fluffytrio.giftrio.settings.SettingsRepositoryTest.getSettings;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -60,7 +61,7 @@ public class CalendarControllerTest {
                 .build();
         users = userRepository.save(users);
 
-        Settings setting = new Settings();
+        Settings setting = getSettings();
         setting = settingsRepository.save(setting);
 
         String title = "title";

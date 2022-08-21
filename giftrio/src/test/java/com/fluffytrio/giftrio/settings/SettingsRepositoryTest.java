@@ -24,19 +24,7 @@ public class SettingsRepositoryTest {
     public void createSettings() {
         ///settings
         //given
-        String colorScheme = "colorScheme";
-        String primaryColor = "primaryColor";
-        String accentColor = "accentColor";
-        String bgColor = "bgColor";
-        String subColor = "subColor";
-
-        Settings settings = Settings.builder()
-                .colorScheme(colorScheme)
-                .primaryColor(primaryColor)
-                .accentColor(accentColor)
-                .bgColor(bgColor)
-                .subColor(subColor)
-                .build();
+        Settings settings = getSettings();
 
         //when
         settingsRepository.save(settings);
@@ -44,6 +32,22 @@ public class SettingsRepositoryTest {
         //then
         Settings postSettings = settingsRepository.findAll().get(0);
 
-        assertThat(postSettings.getAccentColor()).isEqualTo(accentColor);
+        assertThat(postSettings.getAccentColor()).isEqualTo("accentColor");
+    }
+
+    public static Settings getSettings() {
+        String colorScheme = "colorScheme";
+        String primaryColor = "primaryColor";
+        String accentColor = "accentColor";
+        String bgColor = "bgColor";
+        String subColor = "subColor";
+
+        return Settings.builder()
+                .colorScheme(colorScheme)
+                .primaryColor(primaryColor)
+                .accentColor(accentColor)
+                .bgColor(bgColor)
+                .subColor(subColor)
+                .build();
     }
 }
