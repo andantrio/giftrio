@@ -1,7 +1,6 @@
 package com.fluffytrio.giftrio.advent;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -24,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import com.fluffytrio.giftrio.advent.dto.AdventRequestDto;
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.calendar.CalendarRepository;
-import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.settings.Setting;
+import com.fluffytrio.giftrio.settings.SettingRepository;
 import com.fluffytrio.giftrio.user.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 
@@ -49,7 +48,7 @@ public class AdventControllerTest {
     private CalendarRepository calendarRepository;
 
     @Autowired
-    private SettingsRepository settingsRepository;
+    private SettingRepository settingRepository;
 
     public String getApiUrl(){
         return String.format("http://localhost:%d/api/v1/advents", port);
@@ -76,8 +75,8 @@ public class AdventControllerTest {
         User users1 = userRepository.findAll().get(0);
 
         // create setting
-        settingsRepository.save(new Settings());
-        Settings settings1 =  settingsRepository.findAll().get(0);
+        settingRepository.save(new Setting());
+        Setting settings1 =  settingRepository.findAll().get(0);
 
         // create calendar
         LocalDate startDate = LocalDate.now();

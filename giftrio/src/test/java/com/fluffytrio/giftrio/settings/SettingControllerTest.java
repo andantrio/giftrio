@@ -1,6 +1,6 @@
 package com.fluffytrio.giftrio.settings;
 
-import com.fluffytrio.giftrio.settings.dto.SettingsRequestDto;
+import com.fluffytrio.giftrio.settings.dto.SettingRequestDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +14,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static com.fluffytrio.giftrio.settings.SettingsRepositoryTest.getSettings;
+import static com.fluffytrio.giftrio.settings.SettingRepositoryTest.getSetting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SettingsControllerTest {
+public class SettingControllerTest {
     @LocalServerPort
     private int port;
 
@@ -28,19 +28,19 @@ public class SettingsControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    SettingsRepository settingsRepository;
+    SettingRepository settingRepository;
 
-    private final String SETTINGS_URL = "/api/v1/settings";
+    private final String SETTINGS_URL = "/api/v1/setting";
 
     @After
     public void tearDown() throws Exception {
-        settingsRepository.deleteAll();
+        settingRepository.deleteAll();
     }
 
     @Test
     public void addSettingsTest() throws Exception {
         //given
-        SettingsRequestDto settingsRequestDto = SettingsRequestDto.builder()
+        SettingRequestDto settingRequestDto = SettingRequestDto.builder()
                 .colorScheme("colorScheme")
                 .primaryColor("primaryColor")
                 .accentColor("accentColor")
@@ -51,12 +51,12 @@ public class SettingsControllerTest {
         String url = "http://localhost:" + port + SETTINGS_URL;
 
         //when
-        ResponseEntity<Settings> responseEntity = restTemplate.postForEntity(url, settingsRequestDto, Settings.class);
+        ResponseEntity<Setting> responseEntity = restTemplate.postForEntity(url, settingRequestDto, Setting.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        List<Settings> all = settingsRepository.findAll();
+        List<Setting> all = settingRepository.findAll();
         assertAll(
                 () -> assertThat(all.get(0).getAccentColor()).isEqualTo("accentColor"),
                 () -> assertThat(all.get(0).getId()).isNotNull()
@@ -70,12 +70,12 @@ public class SettingsControllerTest {
         String url = "http://localhost:" + port + SETTINGS_URL + "/1";
 
         //when
-        ResponseEntity<Settings> responseEntity = restTemplate.getForEntity(url, Settings.class);
+        ResponseEntity<Setting> responseEntity = restTemplate.getForEntity(url, Setting.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        List<Settings> all = settingsRepository.findAll();
+        List<Setting> all = settingRepository.findAll();
         assertAll(
                 () -> assertThat(all.get(0).getAccentColor()).isEqualTo("accentColor"),
                 () -> assertThat(all.get(0).getId()).isNotNull()
@@ -86,17 +86,17 @@ public class SettingsControllerTest {
     public void getSettingsTest() throws Exception {
         //given
         addSettingsTest();
-        Settings settings = getSettings();
-        settingsRepository.save(settings);
+        Setting settings = getSetting();
+        settingRepository.save(settings);
         String url = "http://localhost:" + port + SETTINGS_URL;
 
         //when
-        ResponseEntity<Settings[]> responseEntity = restTemplate.getForEntity(url, Settings[].class);
+        ResponseEntity<Setting[]> responseEntity = restTemplate.getForEntity(url, Setting[].class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        List<Settings> all = settingsRepository.findAll();
+        List<Setting> all = settingRepository.findAll();
         assertAll(
                 () -> assertThat(all.get(0).getAccentColor()).isEqualTo("accentColor"),
                 () -> assertThat(all).hasSize(2)

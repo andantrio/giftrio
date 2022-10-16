@@ -1,8 +1,8 @@
 package com.fluffytrio.giftrio.calendar;
 
 import com.fluffytrio.giftrio.calendar.dto.CalendarRequestDto;
-import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.settings.Setting;
+import com.fluffytrio.giftrio.settings.SettingRepository;
 import com.fluffytrio.giftrio.user.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.fluffytrio.giftrio.settings.SettingsRepositoryTest.getSettings;
+import static com.fluffytrio.giftrio.settings.SettingRepositoryTest.getSetting;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -38,7 +38,7 @@ public class CalendarControllerTest {
     UserRepository userRepository;
 
     @Autowired
-    SettingsRepository settingsRepository;
+    SettingRepository settingRepository;
 
     @Autowired
     private CalendarRepository calendarRepository;
@@ -48,7 +48,7 @@ public class CalendarControllerTest {
     @After
     public void tearDown() throws Exception {
         calendarRepository.deleteAll();
-        settingsRepository.deleteAll();
+        settingRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -61,8 +61,8 @@ public class CalendarControllerTest {
                 .build();
         users = userRepository.save(users);
 
-        Settings setting = getSettings();
-        setting = settingsRepository.save(setting);
+        Setting setting = getSetting();
+        setting = settingRepository.save(setting);
 
         String title = "title";
         String detail = "detail";
@@ -132,7 +132,7 @@ public class CalendarControllerTest {
         //given
         addCalendarTest();
         Optional<User> user = userRepository.findById(1L);
-        Optional<Settings> settingId = settingsRepository.findById(1L);
+        Optional<Setting> settingId = settingRepository.findById(1L);
 
         LocalDate startDate = LocalDate.of(2022, 05, 01);
         LocalDate endDate = LocalDate.of(2022, 05, 31);
@@ -179,7 +179,7 @@ public class CalendarControllerTest {
         //given
         addCalendarTest();
         Optional<User> user = userRepository.findById(1L);
-        Optional<Settings> settingId = settingsRepository.findById(1L);
+        Optional<Setting> settingId = settingRepository.findById(1L);
 
         LocalDate startDate = LocalDate.of(2022, 05, 01);
         LocalDate endDate = LocalDate.of(2022, 05, 31);

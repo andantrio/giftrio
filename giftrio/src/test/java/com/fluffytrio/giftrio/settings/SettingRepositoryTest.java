@@ -11,38 +11,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SettingsRepositoryTest {
+public class SettingRepositoryTest {
     @Autowired
-    SettingsRepository settingsRepository;
+    SettingRepository settingRepository;
 
     @After
     public void cleanup() {
-        settingsRepository.deleteAll();
+        settingRepository.deleteAll();
     }
 
     @Test
-    public void createSettings() {
+    public void createSetting() {
         ///settings
         //given
-        Settings settings = getSettings();
+        Setting settings = getSetting();
 
         //when
-        settingsRepository.save(settings);
+        settingRepository.save(settings);
 
         //then
-        Settings postSettings = settingsRepository.findAll().get(0);
+        Setting postSettings = settingRepository.findAll().get(0);
 
         assertThat(postSettings.getAccentColor()).isEqualTo("accentColor");
     }
 
-    public static Settings getSettings() {
+    public static Setting getSetting() {
         String colorScheme = "colorScheme";
         String primaryColor = "primaryColor";
         String accentColor = "accentColor";
         String bgColor = "bgColor";
         String subColor = "subColor";
 
-        return Settings.builder()
+        return Setting.builder()
                 .colorScheme(colorScheme)
                 .primaryColor(primaryColor)
                 .accentColor(accentColor)

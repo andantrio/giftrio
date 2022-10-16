@@ -16,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Settings {
+public class Setting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

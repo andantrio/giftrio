@@ -2,7 +2,7 @@ package com.fluffytrio.giftrio.calendar;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.advent.Advent;
-import com.fluffytrio.giftrio.settings.Settings;
+import com.fluffytrio.giftrio.settings.Setting;
 import com.fluffytrio.giftrio.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +34,7 @@ public class Calendar {
 
     @ManyToOne
     @JoinColumn(name="setting_id", nullable=false)
-    private Settings settingId;
+    private Setting settingId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="calendar_id")

@@ -1,6 +1,6 @@
 package com.fluffytrio.giftrio.settings.dto;
 
-import com.fluffytrio.giftrio.settings.Settings;
+import com.fluffytrio.giftrio.settings.Setting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SettingsRequestDto {
+public class SettingRequestDto {
     private Long id;
     private String colorScheme;
     private String primaryColor;
@@ -18,8 +18,8 @@ public class SettingsRequestDto {
     private String bgColor;
     private String subColor;
 
-    public Settings toEntity() {
-        return Settings.builder()
+    public Setting toEntity() {
+        return Setting.builder()
                 .colorScheme(colorScheme)
                 .primaryColor(primaryColor)
                 .accentColor(accentColor)
