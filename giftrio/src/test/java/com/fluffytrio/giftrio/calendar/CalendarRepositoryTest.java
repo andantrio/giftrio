@@ -1,7 +1,7 @@
 package com.fluffytrio.giftrio.calendar;
 
-import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.settings.Setting;
+import com.fluffytrio.giftrio.settings.SettingRepository;
 import com.fluffytrio.giftrio.user.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
@@ -25,7 +25,7 @@ public class CalendarRepositoryTest {
     UserRepository userRepository;
 
     @Autowired
-    SettingsRepository settingsRepository;
+    SettingRepository settingRepository;
 
     @After
     public void cleanup() {
@@ -47,9 +47,9 @@ public class CalendarRepositoryTest {
 
         ///Settings
         //when
-        settingsRepository.save(new Settings());
+        settingRepository.save(new Setting());
         //then
-        Settings postSetting = settingsRepository.findAll().get(0);
+        Setting postSetting = settingRepository.findAll().get(0);
 
         ///Calendar
         Calendar calendar = Calendar.builder()

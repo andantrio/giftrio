@@ -2,8 +2,8 @@ package com.fluffytrio.giftrio.advent;
 
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.calendar.CalendarRepository;
-import com.fluffytrio.giftrio.settings.Settings;
-import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.settings.Setting;
+import com.fluffytrio.giftrio.settings.SettingRepository;
 import com.fluffytrio.giftrio.user.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
@@ -32,7 +32,7 @@ public class AdventRepositoryTest {
     CalendarRepository calendarRepository;
 
     @Autowired
-    SettingsRepository settingsRepository;
+    SettingRepository settingRepository;
 
     @After
     public void cleanup() {
@@ -53,8 +53,8 @@ public class AdventRepositoryTest {
         User users1 = usersRepository.findAll().get(0);
 
         // create setting
-        settingsRepository.save(new Settings());
-        Settings settings1 =  settingsRepository.findAll().get(0);
+        settingRepository.save(new Setting());
+        Setting settings1 =  settingRepository.findAll().get(0);
 
         // create calendar
         calendarRepository.save(Calendar.builder().user(users1).settingId(settings1).build());
