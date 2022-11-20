@@ -1,5 +1,6 @@
 package com.fluffytrio.giftrio.user;
 
+import com.fluffytrio.giftrio.user.entity.User;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +27,10 @@ public class UserRepositoryTest {
     public void createUser() {
         //given
         String userId = "user01";
-        String userName = "nickname";
+        String nickname = "nickname";
         String password = "password";
 
-        userRepository.save(User.builder().email(userId).userName(userName).password(password).build());
+        userRepository.save(User.builder().email(userId).nickname(nickname).password(password).build());
 
         //when
         List<User> userList = userRepository.findAll();
@@ -37,7 +38,7 @@ public class UserRepositoryTest {
         //then
         User user01 = userList.get(0);
         assertThat(user01.getEmail()).isEqualTo(userId);
-        assertThat(user01.getUserName()).isEqualTo(userName);
+        assertThat(user01.getNickname()).isEqualTo(nickname);
         assertThat(user01.getPassword()).isEqualTo(password);
     }
 }
