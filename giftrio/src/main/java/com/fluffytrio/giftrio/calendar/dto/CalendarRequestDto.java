@@ -3,7 +3,7 @@ package com.fluffytrio.giftrio.calendar.dto;
 import com.fluffytrio.giftrio.advent.Advent;
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.settings.Setting;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

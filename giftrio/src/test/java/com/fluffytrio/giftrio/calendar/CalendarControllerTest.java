@@ -3,7 +3,7 @@ package com.fluffytrio.giftrio.calendar;
 import com.fluffytrio.giftrio.calendar.dto.CalendarRequestDto;
 import com.fluffytrio.giftrio.settings.Setting;
 import com.fluffytrio.giftrio.settings.SettingRepository;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.entity.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -56,7 +56,7 @@ public class CalendarControllerTest {
     public void addCalendarTest() throws Exception {
         User users = User.builder()
                 .email("tester")
-                .userName("name")
+                .nickname("name")
                 .password("123456")
                 .build();
         users = userRepository.save(users);

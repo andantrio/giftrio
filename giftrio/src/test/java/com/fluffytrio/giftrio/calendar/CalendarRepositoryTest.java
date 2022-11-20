@@ -2,7 +2,7 @@ package com.fluffytrio.giftrio.calendar;
 
 import com.fluffytrio.giftrio.settings.Setting;
 import com.fluffytrio.giftrio.settings.SettingRepository;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.entity.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -37,9 +37,9 @@ public class CalendarRepositoryTest {
         ///users
         //given
         String userId = "user01";
-        String userName = "nickname";
+        String nickname = "nickname";
         String password = "password";
-        userRepository.save(User.builder().email(userId).userName(userName).password(password).build());
+        userRepository.save(User.builder().email(userId).nickname(nickname).password(password).build());
         //when
         List<User> usersList = userRepository.findAll();
         //then

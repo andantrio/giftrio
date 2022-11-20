@@ -23,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import com.fluffytrio.giftrio.advent.dto.AdventRequestDto;
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.calendar.CalendarRepository;
-import com.fluffytrio.giftrio.settings.Setting;
-import com.fluffytrio.giftrio.settings.SettingRepository;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.settings.Settings;
+import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.user.entity.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -48,7 +48,7 @@ public class AdventControllerTest {
     private CalendarRepository calendarRepository;
 
     @Autowired
-    private SettingRepository settingRepository;
+    private SettingsRepository settingsRepository;
 
     public String getApiUrl(){
         return String.format("http://localhost:%d/api/v1/advents", port);
@@ -69,14 +69,14 @@ public class AdventControllerTest {
 
         // create user
         String userId = "user01";
-        String userName = "nickname";
+        String nickname = "nickname";
         String password = "password";
-        userRepository.save(User.builder().email(userId).userName(userName).password(password).build());
+        userRepository.save(User.builder().email(userId).password(password).nickname(nickname).build());
         User users1 = userRepository.findAll().get(0);
 
         // create setting
-        settingRepository.save(new Setting());
-        Setting settings1 =  settingRepository.findAll().get(0);
+        settingsRepository.save(new Settings());
+        Settings settings1 =  settingsRepository.findAll().get(0);
 
         // create calendar
         LocalDate startDate = LocalDate.now();

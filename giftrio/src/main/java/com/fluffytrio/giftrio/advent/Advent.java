@@ -2,7 +2,7 @@ package com.fluffytrio.giftrio.advent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fluffytrio.giftrio.calendar.Calendar;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
