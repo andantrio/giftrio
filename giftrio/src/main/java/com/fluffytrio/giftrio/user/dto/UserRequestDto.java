@@ -1,17 +1,21 @@
 package com.fluffytrio.giftrio.user.dto;
 
-import com.fluffytrio.giftrio.user.Role;
-import com.fluffytrio.giftrio.user.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fluffytrio.giftrio.user.entity.Role;
+import com.fluffytrio.giftrio.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRequestDto {
     private Long id;
     private Role role;
     private String email;
-    private String userName;
+    private String nickname;
+    @Setter
     private String password;
 
     public User toEntity() {
@@ -19,8 +23,8 @@ public class UserRequestDto {
                 .id(id)
                 .role(role)
                 .email(email)
-                .userName(userName)
                 .password(password)
+                .nickname(nickname)
                 .build();
     }
 }

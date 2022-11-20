@@ -2,9 +2,9 @@ package com.fluffytrio.giftrio.advent;
 
 import com.fluffytrio.giftrio.calendar.Calendar;
 import com.fluffytrio.giftrio.calendar.CalendarRepository;
-import com.fluffytrio.giftrio.settings.Setting;
-import com.fluffytrio.giftrio.settings.SettingRepository;
-import com.fluffytrio.giftrio.user.User;
+import com.fluffytrio.giftrio.settings.Settings;
+import com.fluffytrio.giftrio.settings.SettingsRepository;
+import com.fluffytrio.giftrio.user.entity.User;
 import com.fluffytrio.giftrio.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class AdventRepositoryTest {
     CalendarRepository calendarRepository;
 
     @Autowired
-    SettingRepository settingRepository;
+    SettingsRepository settingsRepository;
 
     @After
     public void cleanup() {
@@ -47,14 +47,14 @@ public class AdventRepositoryTest {
 
         // create user
         String userId = "user01";
-        String userName = "nickname";
         String password = "password";
-        usersRepository.save(User.builder().email(userId).userName(userName).password(password).build());
+        String nickname = "nickname";
+        usersRepository.save(User.builder().email(userId).nickname(nickname).password(password).build());
         User users1 = usersRepository.findAll().get(0);
 
         // create setting
-        settingRepository.save(new Setting());
-        Setting settings1 =  settingRepository.findAll().get(0);
+        settingsRepository.save(new Settings());
+        Settings settings1 =  settingsRepository.findAll().get(0);
 
         // create calendar
         calendarRepository.save(Calendar.builder().user(users1).settingId(settings1).build());
